@@ -10,10 +10,11 @@ class Solution:
                 break
             
             m = l+r//2
+            mini = min(mini, nums[m])
             if nums[m] >= nums[l]:
-                mini = min(mini, nums[l])
+               
                 l+=1
             else:
-                mini = min(mini, nums[m])
+                
                 r-=1
         return mini
