@@ -1,58 +1,43 @@
-# class Solution:
-#     def findCircleNum(self, isConnected: List[List[int]]) -> int:    
-    
-#         parent = [0]* len(isConnected[0])
-#         for i in range(0, len(isConnected)):
-#             parent[i] = i
-        
-#         #no path compression
-#         def find(x):
-#             while x != parent[x]:
-#                 x = parent[x]
-#             return x
-    
-#         def union (x,y):
-#             x_val = find(x)
-#             y_val = find(y)
-        
-#             if x_val!=y_val:
-#                 parent[y] = x_val
-        
-        
-#         for i in range(0,len(isConnected)):
-#             for j in range(0,len(isConnected)):
-#                 if i == j:
-#                     continue
-                    
-#                 if isConnected[i][j] == 1:
-#                     union(i,j)
-                
-#         return len(set(parent))        
 class Solution:
-    def findCircleNum(self, isConnected: List[List[int]]) -> int:
-        
-        l1 = [0]*len(isConnected[0])
-        for i in range(len(l1)):
-            l1[i] = i
-        
-        
-        def get_root(x):
-            return l1[x]
-        
-      
-        def union(x,y):
-            Rx = get_root(x)
-            Ry = get_root(y)
-
-            if(Rx != Ry):
-                for i in range(0,len(l1)):
-                    if l1[i] == Ry:
-                        l1[i] = Rx
-
-        
+    def findCircleNum(self, isConnected: List[List[int]]) -> int:    
+        obj = S(len(isConnected))
+        c = 0 
         for i in range(0,len(isConnected)):
-            for j in range(i+1,len(isConnected[0])):
-                if isConnected[i][j] == 1:
-                    union(i,j)
-            
-        return len(set(l1))
+            for j in range(0,len(isConnected[0])):    
+                if i!=j and isConnected[i][j] == 1:
+                    obj.union(i,j)
+        for i in range(len(isConnected)):
+            if i == obj.find(i):
+                c+=1
+        return c        
+
+    
+class S:  
+      
+        # parent = []
+        # rank = []
+        def __init__(self, n):
+            self.parent = [i for i in range(n)]         
+            self.rank = [1] * n
+        
+        def find(self,x):
+            if x == self.parent[x]:
+                return x
+            self.parent[x] = self.find(self.parent[x])
+            return self.parent[x]
+    
+        def union(self,x,y):
+            x_val = self.find(x)
+            y_val = self.find(y)
+        
+            if x_val!=y_val:
+                if self.rank[x_val]> self.rank[y_val]:
+                    self.parent[y_val] = x_val
+                elif self.rank[y_val]>self.rank[x_val]:
+                    self.parent[x_val] = y_val
+                else:
+                    self.parent[y_val] = x_val
+                    self.rank[x_val]+=1
+        
+        
+        
