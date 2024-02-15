@@ -16,6 +16,7 @@ class Solution:
             if len(res)>=maxlen:
                 maxlen = len(res)
                 final = res
+        
         for i in range(len(s)):
             l = i
             r = l+1
