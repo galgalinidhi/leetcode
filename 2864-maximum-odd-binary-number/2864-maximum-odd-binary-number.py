@@ -16,6 +16,5 @@ class Solution:
         
         
         res+="1"
-        
         return res
             
