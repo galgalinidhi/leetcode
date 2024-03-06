@@ -13,4 +13,5 @@ class Solution:
                 return True
             visited.add(curr)
             curr = curr.next
+       
         return False      
