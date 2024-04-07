@@ -2,7 +2,6 @@ class Solution:
     def checkValidString(self, s: str) -> bool:
         stack = []
         star = []
-        count = 0
         for i in range(len(s)):
             if s[i] == '(':
                 stack.append(i)
